@@ -1,0 +1,16 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        HashSet<Integer> states = new HashSet<Integer>();
+
+        for (int num : nums) {
+            if (states.contains(num)) {
+                return num;
+            }
+            else {
+                states.add(num);
+            }
+        }
+
+        return 0;
+    }
+}
