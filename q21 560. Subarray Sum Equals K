@@ -1,0 +1,30 @@
+class Solution {
+    public int subarraySum(int[] a, int k) {
+        if(a.length == 0){
+            return 0; 
+        }
+         HashMap<Integer,Integer> hm=new HashMap<>();
+        int j =0;
+        hm.put(0,1);//In case  first number comes first
+        int currsum=0;
+        int count=0;
+        while(j<a.length){
+            currsum+=a[j];
+            if(hm.containsKey(currsum-k)){
+                count+=hm.get(currsum-k);
+            }
+            if(hm.containsKey(currsum)){
+                int freq=hm.get(currsum);
+                freq++;
+                hm.put(currsum,freq);
+            }
+            else{
+                hm.put(currsum,1);
+            }
+            j++;
+        }
+       
+        return count;
+         
+    }
+}
