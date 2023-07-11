@@ -1,0 +1,47 @@
+    class RandomizedCollection {
+
+        private ArrayList<Integer> list;
+        private HashMap<Integer, HashSet<Integer>> map;
+        private Random rand;
+
+        public RandomizedCollection() {
+            list = new ArrayList<>();
+            map = new HashMap<>();
+            rand = new Random();
+        }
+
+        public boolean insert(int val) {
+            list.add(val);
+            if (!map.containsKey(val))
+                map.put(val, new HashSet<>());
+            map.get(val).add(list.size() - 1);
+            return map.get(val).size() == 1;
+        }
+
+        public boolean remove(int val) {
+
+            if (!map.containsKey(val) || map.get(val).size() == 0) {
+                return false;
+            }
+
+            int lidx = list.size() - 1; // last index
+            int didx = map.get(val).iterator().next(); // delete index
+            map.get(val).remove(didx);
+
+            int lastValue = list.get(lidx);
+
+            list.set(didx, lastValue);
+
+            // The order of adding first and then removing should be as mentioned below due
+            // to the 0 test case mentioned above.
+            map.get(lastValue).add(didx);
+            map.get(lastValue).remove(lidx);
+
+            list.remove(lidx);
+            return true;
+        }
+
+        public int getRandom() {
+            return list.get(rand.nextInt(list.size()));
+        }
+    }
