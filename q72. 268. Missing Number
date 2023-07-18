@@ -1,0 +1,13 @@
+class Solution
+{
+public:
+  int missingNumber(vector<int> &nums)
+  {
+    int missing = nums.size(); // start with n
+    for (int i = 0; i < nums.size(); i++)
+    {
+      missing ^= i ^ nums[i]; // XOR all numbers with 0 to n and the array
+    }
+    return missing;
+  }
+};
