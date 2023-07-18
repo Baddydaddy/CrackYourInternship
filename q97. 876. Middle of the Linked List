@@ -1,0 +1,27 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;   // Starting Pointer It'll Move 1 by 1
+        ListNode fast = head;   // Starting Pointer It'll Move By 2 step ahead
+
+        // if fast Pointer is ==Null and fast.next is ==NULL -- > Return slow
+        // OtherWise Move Slow Pointer 1 by 1 and fast Poiner by 2 
+        while(fast!=null && fast.next !=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // return the slow Pointer Becauz While Slow Pointer IS 
+        // Coming to Middle Then Fast Pointer will is Going to last --> so we can return the SLOW 
+        // Pointer Here
+        return slow;
+    }
+}
