@@ -1,0 +1,40 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+         
+        int left = 0;
+        int right = 0;
+        int totalWeight = 0, maxWeight = 0;
+        
+        for (int weight: weights) {
+            totalWeight += weight;
+            maxWeight = Math.max(maxWeight, weight);
+        }
+        
+        left = maxWeight;
+        right = totalWeight;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (f (weights, mid, days)) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
+    static boolean f (int[] weights, int target, int days) {
+
+        int totalDays = 1;
+        int weight = 0;
+
+        for (int i = 0; i < weights.length; i++) {
+            weight += weights[i];
+            if (weight > target) {
+                weight = weights[i];
+                totalDays++;
+            }
+        }
+        return totalDays <= days;
+    }
+}
