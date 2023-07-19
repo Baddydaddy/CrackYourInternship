@@ -1,0 +1,52 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head==null)
+            return null;
+        Node ansHead = new Node(head.val); //creating answer head and taking two pointers for each list
+        Node temp2 = ansHead;
+        Node temp = head;
+
+        HashMap<Node, Node> mapped = new HashMap<>();  // storing Node.next references in the map
+        // key - temp.next , value - temp2.next
+        mapped.put(head, ansHead); //putting itnitial values
+
+//traverse the linked list, copying the new nodes and putting next refernces of nodes on map
+        while(temp!=null || temp2!=null){ 
+            
+            if(temp.next!=null){
+                temp2.next = new Node(temp.next.val); //copy
+            }
+
+            mapped.put(temp.next, temp2.next);
+            temp = temp.next;
+            temp2 = temp2.next;
+        }
+
+        temp = head;
+        temp2 = ansHead;
+
+//once again traverse the linked list and make the random connections remaining
+        while(temp2!=null || temp!=null){
+            temp2.random = mapped.get(temp.random); // we will get temp.next.random from the map, we have 
+            // temp.next Node in the map, just retrieve .random from it
+            temp=temp.next;
+            temp2=temp2.next;
+        }
+        return ansHead;
+    }
+}
